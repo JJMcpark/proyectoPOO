@@ -9,10 +9,14 @@ public class Bebida extends Producto {
     private boolean caliente;
     
     public Bebida(Long idProducto, String nombre, String descripcion, String categoria, 
-                 double precioVenta, double descuento, String tamaño, boolean caliente) {
-        super(idProducto, nombre, descripcion, categoria, precioVenta, descuento);
+                 double precioVenta, double descuento, String tamaño, boolean caliente, int cantidad) {
+        super(idProducto, nombre, descripcion, categoria, precioVenta, descuento, cantidad);
         this.tamaño = tamaño;
         this.caliente = caliente;
+    }
+
+    public Bebida() {
+        super();
     }
 
     public void darDescuento() {

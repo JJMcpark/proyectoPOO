@@ -1,5 +1,8 @@
 package utp.poo.proyecto.entities;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class Vendedor {
 
     private Long id;

@@ -12,17 +12,18 @@ public abstract class Producto {
     private String descripcion;
     private String categoria;
     private double precioVenta;
-    private double descuento;   
+    private double descuento;
+    private int cantidad;   
 
-    Producto(Long idProducto, String nombre, String descripcion, String categoria, double precioVenta, double descuento){
-    
+    Producto(Long idProducto, String nombre, String descripcion, String categoria, double precioVenta, double descuento, int cantidad){
+
     this.idProducto = idProducto;
     this.nombre = nombre;
     this.descripcion = descripcion;
     this.categoria = categoria;
     this.precioVenta = precioVenta;
     this.descuento = descuento;
-    
+    this.cantidad = cantidad;
     }
 
     public long getIdProducto(){
