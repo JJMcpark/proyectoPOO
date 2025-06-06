@@ -1,0 +1,10 @@
+Fecha: 06/06/2025 17:37:21
+Vendedor: Josue
+Cliente: jaos | DNI: 128381
+Productos:
+- auas x2 @ S/ 12.45 = S/ 24.9
+SUBTOTAL: S/ 24.90
+IGV (18%): S/ 4.48
+TOTAL: S/ 29.38
+=======================================
+

@@ -6,6 +6,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import utp.poo.proyecto.entities.*;
+import utp.poo.proyecto.utils.FileUtils;
 
 @Component
 public class ConsoleMenu implements CommandLineRunner {
@@ -103,5 +104,19 @@ public class ConsoleMenu implements CommandLineRunner {
         System.out.println("=======================================");
         System.out.println("   ¡Gracias por tu compra en Café Agusto!");
         System.out.println("=======================================");
+
+        String boleta = "Fecha: " + fecha + "\n" +
+                        "Vendedor: " + vendedor.getNombre() + "\n" +
+                        "Cliente: " + cliente.getNombre() + " | DNI: " + cliente.getDni() + "\n" +
+                        "Productos:\n";
+        for (Producto p : productos) {
+            boleta += "- " + p.getNombre() + " x" + p.getCantidad() + " @ S/ " + p.getPrecioVenta() + " = S/ " + (p.getPrecioVenta() * p.getCantidad()) + "\n";
+        }
+        boleta += "SUBTOTAL: S/ " + String.format("%.2f", subtotal) + "\n";
+        boleta += "IGV (18%): S/ " + String.format("%.2f", igv) + "\n";
+        boleta += "TOTAL: S/ " + String.format("%.2f", total) + "\n";
+        boleta += "=======================================\n";
+
+        FileUtils.guardarTexto("src/main/resources/boletas/boletas.txt", boleta, true);
     }
 }
