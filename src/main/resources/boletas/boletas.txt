@@ -1,0 +1,11 @@
+Fecha: 06/06/2025 17:41:10
+Vendedor: Josue
+Cliente: jos | DNI: 81282
+Productos:
+- Cafe x3 @ S/ 5.78 = S/ 17.34
+- Atun x1 @ S/ 15.0 = S/ 15.0
+SUBTOTAL: S/ 32.34
+IGV (18%): S/ 5.82
+TOTAL: S/ 38.16
+=======================================
+
