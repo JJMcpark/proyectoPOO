@@ -6,6 +6,11 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import utp.poo.proyecto.entities.*;
+import utp.poo.proyecto.entities.personas.Cliente;
+import utp.poo.proyecto.entities.personas.Vendedor;
+import utp.poo.proyecto.entities.productos.Bebida;
+import utp.poo.proyecto.entities.productos.Comida;
+import utp.poo.proyecto.entities.productos.Producto;
 import utp.poo.proyecto.utils.FileUtils;
 
 @Component
@@ -22,7 +27,6 @@ public class ConsoleMenu implements CommandLineRunner {
         Vendedor vendedor = new Vendedor();
         System.out.print("Ingrese el nombre del vendedor: ");
         vendedor.setNombre(sc.nextLine());
-
         Cliente cliente = new Cliente();
         System.out.print("Ingrese el nombre del cliente: ");
         cliente.setNombre(sc.nextLine());
@@ -118,5 +122,6 @@ public class ConsoleMenu implements CommandLineRunner {
         boleta += "=======================================\n";
 
         FileUtils.guardarTexto("src/main/resources/boletas/boletas.txt", boleta, true);
+        //sc.close();
     }
 }

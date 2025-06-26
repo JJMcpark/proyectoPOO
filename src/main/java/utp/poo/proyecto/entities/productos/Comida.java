@@ -1,4 +1,4 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.productos;
 
 import lombok.*;
 

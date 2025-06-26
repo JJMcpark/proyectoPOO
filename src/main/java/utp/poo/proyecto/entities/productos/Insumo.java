@@ -1,4 +1,4 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.productos;
 
 import lombok.*;
 
@@ -13,11 +13,5 @@ public class Insumo extends Producto {
         super(idProducto, nombre, descripcion, categoria, precioVenta, descuento, cantidad);
         this.unidadMedida = unidadMedida;
         this.cantidadMinima = cantidadMinima;
-    }
-    
-    @Override
-    public void darDescuento() {
-        System.out.println("El insumo " + getNombre() + " tiene un descuento del " + 
-                           getDescuento() + "% por compra al mayoreo");
     }
 }

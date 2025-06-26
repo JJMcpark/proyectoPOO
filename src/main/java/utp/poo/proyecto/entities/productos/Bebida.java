@@ -1,4 +1,4 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.productos;
 
 import lombok.*;
 
@@ -17,11 +17,6 @@ public class Bebida extends Producto {
 
     public Bebida() {
         super();
-    }
-
-    public void darDescuento() {
-        System.out.println("La bebida " + getNombre() + " tiene un descuento del " + 
-                          getDescuento() + "% por promoción del día");
     }
     
     public void prepararBebida() {

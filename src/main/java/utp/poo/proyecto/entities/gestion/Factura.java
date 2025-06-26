@@ -1,7 +1,10 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.gestion;
 
 import java.util.List;
 import lombok.*;
+import utp.poo.proyecto.entities.personas.Cliente;
+import utp.poo.proyecto.entities.personas.Vendedor;
+import utp.poo.proyecto.entities.productos.Producto;
 
 @Getter
 @Setter

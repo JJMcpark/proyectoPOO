@@ -1,10 +1,11 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.personas;
 
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Cliente extends Persona {
     
     private Long id;
@@ -16,13 +17,6 @@ public class Cliente extends Persona {
         this.id = id;
         this.telefono = telefono;
         this.correo = correo;
-    }
-
-    // Constructor solo con id, nombre y telefono (opcional)
-    public Cliente(Long id, String nombre, Long telefono) {
-        super(nombre, id);
-        this.id = id;
-        this.telefono = telefono;
     }
 
     public void realizarPedidos() {
@@ -45,22 +39,4 @@ public class Cliente extends Persona {
         System.out.println("Numero de dni: " + getDni());
         System.out.println("Numero de telefono: " + getTelefono());
     }
-
-    // Métodos de acceso ya estan implementados por Lombok
-    public String getNombre(){
-        return super.getNombre();
-    }
-    public String getCorreo() {
-        return correo;
-    }
-    public long getDni() {
-        return super.getDni();
-    }
-    public long getTelefono(){
-        return telefono;
-    }
-    public long getId(){
-        return id;
-    }
-
 }

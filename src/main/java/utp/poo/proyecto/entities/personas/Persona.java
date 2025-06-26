@@ -1,4 +1,4 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.personas;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,16 +18,5 @@ public abstract class Persona {
     }
     
     public abstract void mostrarInfo();
-    
-    public String getNombre(){
-        
-        return nombre;
-    }    
-    
-    public long getDni(){
-        
-        return dni;
-        
-    }
     
 }

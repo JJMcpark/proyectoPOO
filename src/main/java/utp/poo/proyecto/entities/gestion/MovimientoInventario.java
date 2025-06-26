@@ -1,7 +1,9 @@
-package utp.poo.proyecto.entities;
+package utp.poo.proyecto.entities.gestion;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import utp.poo.proyecto.entities.productos.Producto;
 
 public class MovimientoInventario implements Serializable {
     private static final long serialVersionUID = 1L;
