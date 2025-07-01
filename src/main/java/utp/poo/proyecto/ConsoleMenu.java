@@ -152,7 +152,7 @@ public class ConsoleMenu implements CommandLineRunner {
         System.out.println("   ¡Gracias por tu compra en Café Agusto!");
         System.out.println("=======================================");
 
-        String boleta = BoletaUtils.generarBoleta(vendedor, cliente, productos);
+        String boleta = BoletaUtils.imprimirBoleta(vendedor, cliente, productos);
         FileUtils.guardarTexto("src/main/resources/boletas/boletas.txt", boleta, true);
         System.out.println(boleta);
         comprobanteService.guardarBoleta(vendedor, cliente, productos);
