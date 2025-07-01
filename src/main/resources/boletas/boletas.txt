@@ -9,3 +9,23 @@ IGV (18%): S/ 5.82
 TOTAL: S/ 38.16
 =======================================
 
+Fecha: 26/06/2025 20:08:11
+Vendedor: Josue
+Cliente: Karol | DNI: 12313
+Productos:
+- Chatarra x3 @ S/ 12.0 = S/ 36.0
+SUBTOTAL: S/ 36.00
+IGV (18%): S/ 6.48
+TOTAL: S/ 42.48
+=======================================
+
+Fecha: 26/06/2025 20:08:11
+Vendedor: Josue
+Cliente: Karol | DNI: 12313
+Productos:
+- Chatarra x3 @ S/ 12.0 = S/ 36.0
+SUBTOTAL: S/ 36.00
+IGV (18%): S/ 6.48
+TOTAL: S/ 42.48
+=======================================
+

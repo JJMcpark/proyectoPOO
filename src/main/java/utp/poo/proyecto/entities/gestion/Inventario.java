@@ -32,7 +32,7 @@ public class Inventario {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-     public boolean actualizarStock(int cantidad) {
+    public boolean actualizarStock(int cantidad) {
         if (this.stock + cantidad < 0) {
             System.out.println("Error: Stock insuficiente para realizar esta operación.");
             return false;
@@ -41,34 +41,8 @@ public class Inventario {
         System.out.println("Stock actualizado. Nuevo stock: " + this.stock);
         return true;
     }
-
-    
-        public int getStock() {
-            return stock;
-        }
         
-        public String getFechaIngreso(){     
-           
-            return fechaIngreso;         
-        }
-        
-        public double getPrecioVenta(){
-            
-            return precioVenta;
-        }
-        
-        public long getIdInventario(){
-            
-            return idInventario;
-        }
-        
-        public String getFechaVencimiento(){
-            
-            return fechaVencimiento;
-        }
-        
-        
-        public void contactarProveedor(Proveedor proveedor){
-            System.out.println("Se está contactando con el proveedor " + proveedor.getNombre());
-        }
+    public void contactarProveedor(Proveedor proveedor){
+        System.out.println("Se está contactando con el proveedor " + proveedor.getNombre());
+    }
 }

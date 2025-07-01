@@ -7,6 +7,7 @@ import java.util.List;
 
 import utp.poo.proyecto.entities.gestion.MovimientoInventario;
 import utp.poo.proyecto.entities.productos.Producto;
+import utp.poo.proyecto.utils.FileUtils;
 
 @Data
 @Service
@@ -18,12 +19,15 @@ public class KardexServiceImp implements KardexService {
     public void registrarMovimientoInventario(String tipo, Producto producto, int cantidad, String observacion, double precioUnitario) {
         MovimientoInventario mov = new MovimientoInventario(producto, tipo, cantidad, observacion, precioUnitario);
         movimientos.add(mov);
-        // Opcional: guardar en archivo
+        String registro = mov.toString();
+        FileUtils.guardarTexto("src/main/resources/kardex/kardex.txt", registro, true);
     }
 
+    @Override
     public void mostrarKardex() {
-        for (MovimientoInventario mov : movimientos) {
-            System.out.println(mov);
+        List<String> registros = FileUtils.leerLineas("src/main/resources/kardex/kardex.txt");
+        for (String linea : registros) {
+            System.out.println(linea);
         }
     }
 

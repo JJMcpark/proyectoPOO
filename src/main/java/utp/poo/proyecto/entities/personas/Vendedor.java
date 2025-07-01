@@ -7,10 +7,9 @@ import utp.poo.proyecto.entities.productos.Producto;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Vendedor {
+public class Vendedor extends Persona {
 
     private Long id;
-    private String nombre;
     private String correo;
     private Long telefono;
 
@@ -18,8 +17,12 @@ public class Vendedor {
         System.out.println("Vendiendo producto: " + producto.getNombre());
     }
     
+    public void mostrarInfo() {
+        System.out.println("Vendedor: " + getNombre() + ", DNI: " + getDni());
+    }
+
     public void generarFactura(){
-        System.out.println("El vendedor" + nombre + " esta generando una factura");
+        System.out.println("El vendedor " + getNombre() + " esta generando una factura");
     }
     
     public void autorizarDescuento(){

@@ -9,9 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Factura extends Comprobante {
+public class Boleta extends Comprobante {
 
-    public Factura(Long id, Cliente cliente, Vendedor vendedor, String fechaEmision, List<Producto> productos) {
+    public Boleta(Long id, Cliente cliente, Vendedor vendedor, String fechaEmision, List<Producto> productos) {
         super(id, cliente, vendedor, fechaEmision, productos, 0);
         this.total = calcularTotal();
     }

@@ -1,5 +1,8 @@
 package utp.poo.proyecto.services;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class VendedorServiceImp implements VendedorService {
 
     // Implementar los métodos de la interfaz VendedorService aquí

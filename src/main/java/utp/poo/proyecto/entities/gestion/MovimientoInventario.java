@@ -2,9 +2,15 @@ package utp.poo.proyecto.entities.gestion;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import lombok.*;
 
 import utp.poo.proyecto.entities.productos.Producto;
 
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovimientoInventario implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -24,31 +30,8 @@ public class MovimientoInventario implements Serializable {
         this.observacion = observacion;
         this.precioUnitario = precioUnitario;
     }
-    
-    // Getters
-    public Producto getProducto() {
-        return producto;
-    }
-    
-    public String getTipo() {
-        return tipo;
-    }
-    
-    public int getCantidad() {
-        return cantidad;
-    }
-    
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-    
-    public String getObservacion() {
-        return observacion;
-    }
-    
-    public double getPrecioUnitario() {
-        return precioUnitario;
-    }
+
+    //getters y setters reemplazados por lombok 
     
     public double getTotal() {
         return cantidad * precioUnitario;
