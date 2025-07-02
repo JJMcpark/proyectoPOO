@@ -29,3 +29,25 @@ IGV (18%): S/ 6.48
 TOTAL: S/ 42.48
 =======================================
 
+Fecha: 02/07/2025 00:02:28
+Vendedor: Josue
+Cliente: John | DNI: 81283912
+Productos:
+- 7up x2 @ S/ 3.45 = S/ 6.9
+- Empanadas x3 @ S/ 4.55 = S/ 13.649999999999999
+SUBTOTAL: S/ 20.55
+IGV (18%): S/ 3.70
+TOTAL: S/ 24.25
+=======================================
+
+Fecha: 02/07/2025 00:02:28
+Vendedor: Josue
+Cliente: John | DNI: 81283912
+Productos:
+- 7up x2 @ S/ 3.45 = S/ 6.9
+- Empanadas x3 @ S/ 4.55 = S/ 13.649999999999999
+SUBTOTAL: S/ 20.55
+IGV (18%): S/ 3.70
+TOTAL: S/ 24.25
+=======================================
+

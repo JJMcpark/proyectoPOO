@@ -4,6 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Insumo extends Producto {
     private String unidadMedida;
     private double cantidadMinima;
