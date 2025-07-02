@@ -48,64 +48,86 @@ public class KardexServiceImp implements KardexService {
     @Override
     public void registrarMovimientoInventarioInteractivo(Scanner sc) {
         System.out.print("Tipo de movimiento (ENTRADA/SALIDA): ");
-        String tipo = sc.nextLine().trim();
-        // Solo permite Insumo o Producto genérico
-        System.out.println("Seleccione el tipo de producto:");
+        String tipo = leerNoVacio(sc);
+
         System.out.println("1. Insumo");
         System.out.println("2. Otro producto");
-        System.out.print("Opción: ");
-        int tipoProducto = 0;
-        while (tipoProducto < 1 || tipoProducto > 2) {
-            String opcionStr = sc.nextLine().trim();
-            try {
-                tipoProducto = Integer.parseInt(opcionStr);
-                if (tipoProducto < 1 || tipoProducto > 2) {
-                    System.out.print("Opción inválida. Ingrese 1 o 2: ");
-                }
-            } catch (NumberFormatException e) {
-                System.out.print("Entrada inválida. Ingrese 1 o 2: ");
-            }
-        }
-        Producto producto = null;
+        int tipoProducto = leerOpcion(sc, 1, 2);
+
+        Producto producto;
         if (tipoProducto == 1) {
             producto = new Insumo();
             System.out.print("Nombre del insumo: ");
-            String nombreInsumo = sc.nextLine().trim();
-            producto.setNombre(nombreInsumo.isEmpty() ? null : nombreInsumo);
         } else {
-            producto = new Producto() {}; // Producto anónimo si es abstracto
+            producto = new Producto() {};
             System.out.print("Nombre del producto: ");
-            String nombreProd = sc.nextLine().trim();
-            producto.setNombre(nombreProd.isEmpty() ? null : nombreProd);
         }
+        String nombre = leerNoVacio(sc);
+        producto.setNombre(nombre);
+
         System.out.print("Cantidad: ");
-        producto.setCantidad(leerEnteroPositivoNull(sc));
+        Integer cantidad = leerEnteroPositivoNull(sc);
+        producto.setCantidad(cantidad);
+
         System.out.print("Precio unitario: ");
-        producto.setPrecioVenta(leerDoublePositivoNull(sc));
+        Double precio = leerDoublePositivoNull(sc);
+        producto.setPrecioVenta(precio);
+
         System.out.print("Observación: ");
-        String observacion = sc.nextLine().trim();
-        registrarMovimientoInventario(tipo, producto, producto.getCantidad(), observacion, producto.getPrecioVenta());
+        String observacion = sc.nextLine();
+
+        registrarMovimientoInventario(tipo, producto, cantidad, observacion, precio);
+    }
+
+    private String leerNoVacio(Scanner sc) {
+        String entrada;
+        do {
+            entrada = sc.nextLine().trim();
+            if (entrada.isEmpty()) System.out.print("Este campo es obligatorio. Intente de nuevo: ");
+        } while (entrada.isEmpty());
+        return entrada;
+    }
+
+    private int leerOpcion(Scanner sc, int min, int max) {
+        int opcion = -1;
+        while (opcion < min || opcion > max) {
+            System.out.print("Opción: ");
+            String input = sc.nextLine().trim();
+            try {
+                opcion = Integer.parseInt(input);
+                if (opcion < min || opcion > max) System.out.print("Opción inválida. ");
+            } catch (NumberFormatException e) {
+                System.out.print("Ingrese un número válido. ");
+            }
+        }
+        return opcion;
     }
 
     private Integer leerEnteroPositivoNull(Scanner sc) {
-        String entrada = sc.nextLine().trim();
-        if (entrada.isEmpty()) return null;
-        try {
-            int valor = Integer.parseInt(entrada);
-            return valor >= 0 ? valor : null;
-        } catch (NumberFormatException e) {
-            return null;
+        while (true) {
+            String entrada = sc.nextLine().trim();
+            if (entrada.isEmpty()) return null;
+            try {
+                int valor = Integer.parseInt(entrada);
+                if (valor >= 0) return valor;
+                System.out.print("Ingrese un valor positivo: ");
+            } catch (NumberFormatException e) {
+                System.out.print("Ingrese un número entero válido: ");
+            }
         }
     }
 
     private Double leerDoublePositivoNull(Scanner sc) {
-        String entrada = sc.nextLine().trim();
-        if (entrada.isEmpty()) return null;
-        try {
-            double valor = Double.parseDouble(entrada);
-            return valor >= 0 ? valor : null;
-        } catch (NumberFormatException e) {
-            return null;
+        while (true) {
+            String entrada = sc.nextLine().trim();
+            if (entrada.isEmpty()) return null;
+            try {
+                double valor = Double.parseDouble(entrada);
+                if (valor >= 0) return valor;
+                System.out.print("Ingrese un valor positivo: ");
+            } catch (NumberFormatException e) {
+                System.out.print("Ingrese un número válido: ");
+            }
         }
     }
 }

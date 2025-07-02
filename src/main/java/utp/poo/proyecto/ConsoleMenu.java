@@ -28,15 +28,7 @@ public class ConsoleMenu implements CommandLineRunner {
             System.out.println("4. Ver boletas");
             System.out.println("5. Salir");
 
-            int opcion = -1;
-            while (opcion < 1 || opcion > 5) {
-                System.out.print("Seleccione una opción: ");
-                String opcionStr = sc.nextLine().trim();
-                opcion = parseOpcion(opcionStr);
-                if (opcion < 1 || opcion > 5) {
-                    System.out.println("Opción no válida. Intente de nuevo.");
-                }
-            }
+            int opcion = leerOpcionMenu(sc, 1, 5);
 
             switch (opcion) {
                 case 1:
@@ -60,11 +52,20 @@ public class ConsoleMenu implements CommandLineRunner {
         sc.close();
     }
 
-    private int parseOpcion(String opcionStr) {
-        try {
-            return Integer.parseInt(opcionStr);
-        } catch (NumberFormatException e) {
-            return -1;
+    private int leerOpcionMenu(Scanner sc, int min, int max) {
+        int opcion = -1;
+        while (opcion < min || opcion > max) {
+            System.out.print("Seleccione una opción: ");
+            String input = sc.nextLine().trim();
+            try {
+                opcion = Integer.parseInt(input);
+                if (opcion < min || opcion > max) {
+                    System.out.println("Opción no válida. Intente de nuevo.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Ingrese un número válido.");
+            }
         }
+        return opcion;
     }
 }

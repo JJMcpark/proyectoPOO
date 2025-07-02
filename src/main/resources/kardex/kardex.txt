@@ -3,3 +3,7 @@ ENTRADA | Cafe | Cantidad: 4 | Precio unitario: S/ 56.45 | Total: S/ 225.80 | Ob
 
 ENTRADA | Cafe | Cantidad: 3 | Precio unitario: S/ 45.50 | Total: S/ 136.50 | Observación: Kilos | Fecha: 2025-07-02 01:09:06
 
+ENTRADA | Cafe | Cantidad: 4 | Precio unitario: S/ 34.45 | Total: S/ 137.80 | Observación: Kilogramos Altomayo | Fecha: 2025-07-02 01:35:46
+
+SALIDA | Cafe | Cantidad: 2 | Precio unitario: S/ 45.67 | Total: S/ 91.34 | Observación: Altomayo | Fecha: 2025-07-02 01:45:15
+
