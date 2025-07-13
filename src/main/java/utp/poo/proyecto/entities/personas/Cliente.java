@@ -12,6 +12,10 @@ public class Cliente extends Persona {
     private Long telefono;
     private String correo;
 
+    // NUEVO: Campos necesarios para la Factura.
+    private String ruc;
+    private String razonSocial;
+
     public Cliente(Long id, String nombre, Long dni, String correo, Long telefono) {
         super(nombre, dni);
         this.id = id;
@@ -19,6 +23,7 @@ public class Cliente extends Persona {
         this.correo = correo;
     }
 
+    // ... (El resto de la clase no cambia)
     public void realizarPedidos() {
         System.out.println(getNombre() + " está realizando un pedido.");
 
@@ -29,8 +34,7 @@ public class Cliente extends Persona {
         setTelefono(nuevoTelefono);
         System.out.println("Datos del cliente actualizados.");
     }
-
-    // Nuevo método para mostrar info como en el cliente pequeño
+    
     @Override
     public void mostrarInfo() {
         System.out.println("Datos del cliente: ");

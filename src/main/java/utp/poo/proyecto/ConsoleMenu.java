@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Scanner;
 import utp.poo.proyecto.services.KardexService;
 import utp.poo.proyecto.services.ComprobanteService;
-import utp.poo.proyecto.utils.ConsoleReader; // MEJORADO: Se importa la nueva utilidad
+import utp.poo.proyecto.utils.ConsoleReader;
 
 @Component
 public class ConsoleMenu implements CommandLineRunner {
@@ -27,12 +27,18 @@ public class ConsoleMenu implements CommandLineRunner {
             System.out.println("2. Ver Boletas de Venta");
             System.out.println("3. Registrar Movimiento de Inventario (Kardex)");
             System.out.println("4. Ver Kardex");
-            System.out.println("5. Salir");
+            System.out.println("5. Generar Factura");
+            System.out.println("6. Ver Facturas");
+            System.out.println("0. Salir");
 
             // MEJORADO: Se usa el nuevo método para leer opciones de forma segura.
-            int opcion = ConsoleReader.leerOpcion(sc, "Seleccione una opción: ", 1, 5);
+            int opcion = ConsoleReader.leerOpcion(sc, "Seleccione una opción: ", 0, 6);
 
             switch (opcion) {
+                case 0:
+                    salir = true;
+                    System.out.println("Saliendo del sistema. ¡Gracias por usar Café A gusto!");
+                    break;
                 case 1:
                     comprobanteService.generarBoleta(sc);
                     break;
@@ -46,8 +52,10 @@ public class ConsoleMenu implements CommandLineRunner {
                     kardexService.mostrarKardex();
                     break;
                 case 5:
-                    salir = true;
-                    System.out.println("¡Gracias por usar el sistema Café Agusto! ¡Hasta luego!");
+                    comprobanteService.generarFactura(sc);
+                    break;
+                case 6:
+                    comprobanteService.mostrarFacturas();
                     break;
             }
         }

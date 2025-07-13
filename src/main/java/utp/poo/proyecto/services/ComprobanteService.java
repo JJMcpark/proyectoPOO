@@ -14,4 +14,8 @@ public interface ComprobanteService {
     void mostrarBoletas();
     void generarBoleta(Scanner sc);
     Producto crearProductoInteractivo(Scanner sc);
+
+    // NUEVO: Métodos para la factura
+    void generarFactura(Scanner sc);
+    void mostrarFacturas();
 }

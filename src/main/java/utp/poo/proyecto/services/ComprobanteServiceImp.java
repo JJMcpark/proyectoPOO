@@ -4,18 +4,23 @@ package utp.poo.proyecto.services;
 import utp.poo.proyecto.entities.personas.*;
 import utp.poo.proyecto.entities.productos.*;
 import utp.poo.proyecto.generics.GestorLista; // MEJORADO: Se usa el gestor genérico
-import utp.poo.proyecto.utils.BoletaUtils;
+import utp.poo.proyecto.utils.ComprobanteUtils;
 import utp.poo.proyecto.utils.ConsoleReader; // MEJORADO: Se usa la nueva utilidad
 import utp.poo.proyecto.utils.FileUtils;
 import java.util.Scanner;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
 public class ComprobanteServiceImp implements ComprobanteService {
 
-    private static final String RUTA_BOLETAS = "data/boletas/boletas.txt"; 
+    // MEJORADO: Se usan rutas fuera de 'resources' para evitar reinicios de DevTools
+    private static final String RUTA_BOLETAS = "data/boletas/boletas.txt";
+    private static final String RUTA_FACTURAS = "data/facturas/facturas.txt"; // NUEVO
+
     private final Vendedor vendedorPorDefecto;
 
     public ComprobanteServiceImp() {
@@ -67,6 +72,59 @@ public class ComprobanteServiceImp implements ComprobanteService {
         guardarBoleta(vendedorPorDefecto, cliente, productos.obtenerTodos());
     }
 
+        // NUEVO: Implementación para generar facturas
+    @Override
+    public void generarFactura(Scanner sc) {
+        System.out.println("\n---[ GENERACIÓN DE FACTURA ]---");
+        Cliente cliente = new Cliente();
+        System.out.print("Ingrese el RUC del cliente: ");
+        cliente.setRuc(sc.nextLine().trim());
+        System.out.print("Ingrese la Razón Social del cliente: ");
+        cliente.setRazonSocial(sc.nextLine().trim());
+
+        List<Producto> productos = agregarProductos(sc);
+
+        if (productos.isEmpty()){
+            System.out.println("Venta cancelada: no se agregaron productos.");
+            return;
+        }
+        
+        // Usamos el mismo método genérico, pero con el tipo "FACTURA"
+        String factura = ComprobanteUtils.imprimirComprobante("FACTURA", vendedorPorDefecto, cliente, productos);
+        FileUtils.guardarTexto(RUTA_FACTURAS, factura, true);
+
+        System.out.println("\n=== FACTURA GENERADA ===");
+        System.out.println(factura);
+    }
+    
+    // NUEVO: Método privado para no repetir la lógica de agregar productos
+    private List<Producto> agregarProductos(Scanner sc){
+        List<Producto> productos = new ArrayList<>();
+        boolean agregarMas = true;
+        while (agregarMas) {
+            Producto producto = crearProductoInteractivo(sc);
+            if (producto != null) {
+                productos.add(producto);
+            }
+            System.out.print("¿Desea agregar otro producto? (si/no): ");
+            agregarMas = sc.nextLine().trim().equalsIgnoreCase("si");
+        }
+        return productos;
+    }
+
+    // NUEVO: Implementación para mostrar facturas
+    @Override
+    public void mostrarFacturas() {
+        System.out.println("\n---[ FACTURAS REGISTRADAS ]---");
+        List<String> facturas = FileUtils.leerLineas(RUTA_FACTURAS);
+        if (facturas.isEmpty()) {
+            System.out.println("No hay facturas registradas.");
+        } else {
+            facturas.forEach(System.out::println);
+        }
+        System.out.println("--------------------------------\n");
+    }
+
     @Override
     public Producto crearProductoInteractivo(Scanner sc) {
         int tipo = ConsoleReader.leerOpcion(sc, "Seleccione tipo de producto (1. Insumo, 2. Comida, 3. Bebida): ", 1, 3);
@@ -113,7 +171,7 @@ public class ComprobanteServiceImp implements ComprobanteService {
     
     @Override
     public void guardarBoleta(Vendedor vendedor, Cliente cliente, List<Producto> productos) {
-        String boleta = BoletaUtils.imprimirBoleta(vendedor, cliente, productos);
+        String boleta = ComprobanteUtils.imprimirComprobante("BOLETA", vendedor, cliente, productos);
         FileUtils.guardarTexto(RUTA_BOLETAS, boleta, true); // Usar append
         
         System.out.println("\n=== BOLETA GENERADA Y GUARDADA ===");
