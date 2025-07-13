@@ -13,7 +13,7 @@ import java.util.Scanner;
 @Service
 public class KardexServiceImp implements KardexService {
 
-    private static final String RUTA_KARDEX = "src/main/resources/kardex/kardex.txt";
+    private static final String RUTA_KARDEX = "data/kardex/kardex.txt";
 
     @Override
     public void registrarMovimientoInventario(String tipo, Producto producto, Integer cantidad, String observacion, Double precioUnitario) {

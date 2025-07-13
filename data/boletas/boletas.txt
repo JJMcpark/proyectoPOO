@@ -62,3 +62,23 @@ IGV (18%): S/ 10.26
 TOTAL: S/ 67.27
 =======================================
 
+Fecha: 12/07/2025 21:42:20
+Vendedor: Josue
+Cliente: Josue | DNI: 98989898
+Productos:
+- Cafe x3 @ S/ 5.6 = S/ 16.799999999999997
+SUBTOTAL: S/ 16.80
+IGV (18%): S/ 3.02
+TOTAL: S/ 19.82
+=======================================
+
+Fecha: 12/07/2025 21:50:04
+Vendedor: Josue
+Cliente: Josue | DNI: 828822882
+Productos:
+- Juanes x56 @ S/ 15.67 = S/ 877.52
+SUBTOTAL: S/ 877.52
+IGV (18%): S/ 157.95
+TOTAL: S/ 1035.47
+=======================================
+

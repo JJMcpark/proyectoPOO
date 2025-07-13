@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ComprobanteServiceImp implements ComprobanteService {
 
-    private static final String RUTA_BOLETAS = "src/main/resources/boletas/boletas.txt";
+    private static final String RUTA_BOLETAS = "data/boletas/boletas.txt"; // Ruta para guardar las boletas
     private final Vendedor vendedorPorDefecto;
 
     public ComprobanteServiceImp() {
