@@ -8,3 +8,5 @@ ENTRADA | Cafe | Cantidad: 4 | Precio unitario: S/ 34.45 | Total: S/ 137.80 | Ob
 SALIDA | Cafe | Cantidad: 2 | Precio unitario: S/ 45.67 | Total: S/ 91.34 | Observación: Altomayo | Fecha: 2025-07-02 01:45:15
 
 TIPO: SALIDA | PRODUCTO: Arroz | CANTIDAD: 2 | PRECIO_UNIT: S/ 13.45 | TOTAL: S/ 26.90 | OBSERVACION: Kilos de arroz | FECHA: 2025-07-12 21:50:28
+ENTRADA | Cacho | Cantidad: 23 | Precio unitario: S/ 2.50 | Total: S/ 57.50 | Observación: unidades | Fecha: 2025-07-12 22:57:06
+

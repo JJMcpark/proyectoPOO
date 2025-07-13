@@ -3,6 +3,7 @@ package utp.poo.proyecto.services;
 import utp.poo.proyecto.entities.personas.*;
 import utp.poo.proyecto.entities.productos.*;
 import utp.poo.proyecto.utils.ComprobanteUtils; // CORRECCIÓN: Usar la clase renombrada
+import utp.poo.proyecto.utils.ConsoleReader;
 import utp.poo.proyecto.utils.FileUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class ComprobanteServiceImp implements ComprobanteService {
         List<Producto> productos = new ArrayList<>();
         boolean agregarMas = true;
         while (agregarMas) {
-            Producto producto = crearProductoInteractivo(sc);
+            Producto producto = crearProducto(sc);
             if (producto != null) {
                 productos.add(producto);
             }
@@ -95,59 +96,55 @@ public class ComprobanteServiceImp implements ComprobanteService {
         return productos;
     }
 
+
     @Override
-    public Producto crearProductoInteractivo(Scanner sc) {
-        // Esta lógica de creación de producto se mantiene como estaba en tu código original.
-        // La haremos más robusta en el Paso 3.
+    public Producto crearProducto(Scanner sc) {
         System.out.println("Seleccione el tipo de producto:");
         System.out.println("1. Insumo");
         System.out.println("2. Comida");
         System.out.println("3. Bebida");
-        System.out.print("Opción: ");
-        String tipoStr = sc.nextLine().trim();
-        int tipo = Integer.parseInt(tipoStr); // Esto puede fallar, lo arreglaremos en el Paso 3.
+
+        int tipo = ConsoleReader.leerOpcion(sc, "Opción: ", 1, 3); 
 
         Producto producto = null;
+        String nombre; 
+        
         switch (tipo) {
             case 1:
                 producto = new Insumo();
-                System.out.print("Nombre del insumo: ");
-                producto.setNombre(sc.nextLine().trim());
-                System.out.print("Cantidad: ");
-                producto.setCantidad(Integer.parseInt(sc.nextLine().trim()));
-                System.out.print("Precio unitario (IGV incluido): ");
-                producto.setPrecioVenta(Double.parseDouble(sc.nextLine().trim()));
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre del insumo: ");
+                producto.setNombre(nombre);
                 break;
             case 2:
                 producto = new Comida();
-                System.out.print("Nombre de la comida: ");
-                producto.setNombre(sc.nextLine().trim());
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la comida: ");
+                producto.setNombre(nombre);
                 System.out.print("¿Es para llevar? (si/no): ");
                 ((Comida) producto).setParaLlevar(sc.nextLine().trim().equalsIgnoreCase("si"));
-                System.out.print("Precio unitario (IGV incluido): ");
-                producto.setPrecioVenta(Double.parseDouble(sc.nextLine().trim()));
-                System.out.print("Cantidad: ");
-                producto.setCantidad(Integer.parseInt(sc.nextLine().trim()));
                 break;
             case 3:
                 producto = new Bebida();
-                System.out.print("Nombre de la bebida: ");
-                producto.setNombre(sc.nextLine().trim());
-                System.out.print("Cantidad: ");
-                producto.setCantidad(Integer.parseInt(sc.nextLine().trim()));
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la bebida: ");
+                producto.setNombre(nombre);
                 System.out.print("Tamaño (Pequeña/Mediana/Grande): ");
                 ((Bebida) producto).setTamaño(sc.nextLine().trim());
-                System.out.print("Precio unitario (IGV incluido): ");
-                producto.setPrecioVenta(Double.parseDouble(sc.nextLine().trim()));
                 break;
         }
-        return producto;
-    }
 
-    // Este método ya no es necesario aquí, lo eliminamos para evitar confusión.
-    // Lo crearemos en una clase aparte en el Paso 3.
-    // private Integer leerEnteroPositivoNull(Scanner sc) { ... }
-    // private Double leerDoublePositivoNull(Scanner sc) { ... }
+        // --- MEJORA PRINCIPAL ---
+        // Ahora que el producto base está creado, pedimos los datos comunes.
+        // No declaramos una nueva variable 'cantidad', sino que usamos el método del objeto.
+        if (producto != null) {
+            Integer cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
+            producto.setCantidad(cantidad != null ? cantidad : 0); // Asigna la cantidad al objeto
+
+            Double precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario (IGV incluido): ");
+            producto.setPrecioVenta(precio != null ? precio : 0.0); // Asigna el precio al objeto
+        }
+        
+        // El método devuelve el objeto COMPLETO, con su cantidad y precio ya establecidos.
+        return producto; 
+    }
 
     @Override
     public void guardarBoleta(Vendedor vendedor, Cliente cliente, List<Producto> productos) {

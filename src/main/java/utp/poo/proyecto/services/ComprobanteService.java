@@ -13,9 +13,7 @@ public interface ComprobanteService {
     void guardarBoleta(Vendedor vendedor, Cliente cliente, List<Producto> productos);
     void mostrarBoletas();
     void generarBoleta(Scanner sc);
-    Producto crearProductoInteractivo(Scanner sc);
-
-    // NUEVO: Métodos para la factura
+    Producto crearProducto(Scanner sc);
     void generarFactura(Scanner sc);
     void mostrarFacturas();
 }
