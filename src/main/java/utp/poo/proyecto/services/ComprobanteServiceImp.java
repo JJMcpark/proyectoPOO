@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ComprobanteServiceImp implements ComprobanteService {
 
-    private static final String RUTA_BOLETAS = "data/boletas/boletas.txt"; // Ruta para guardar las boletas
+    private static final String RUTA_BOLETAS = "data/boletas/boletas.txt"; 
     private final Vendedor vendedorPorDefecto;
 
     public ComprobanteServiceImp() {
@@ -81,13 +81,13 @@ public class ComprobanteServiceImp implements ComprobanteService {
                 producto = new Insumo();
                 nombre = ConsoleReader.leerNoVacio(sc, "Nombre del insumo: ");
                 cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
-                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario (IGV incluido): ");
                 break;
             case 2:
                 producto = new Comida();
                 nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la comida: ");
                 cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
-                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario (IGV incluido): ");
                 String paraLlevarStr = ConsoleReader.leerOpcional(sc, "¿Es para llevar? (si/no): ");
                 ((Comida) producto).setParaLlevar(paraLlevarStr.equalsIgnoreCase("si"));
                 break;
@@ -95,7 +95,7 @@ public class ComprobanteServiceImp implements ComprobanteService {
                 producto = new Bebida();
                 nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la bebida: ");
                 cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
-                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario (IGV incluido): ");
                 String tam = ConsoleReader.leerOpcional(sc, "Tamaño (Pequeña/Mediana/Grande): ");
                 ((Bebida) producto).setTamaño(tam);
                 break;
