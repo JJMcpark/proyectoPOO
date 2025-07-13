@@ -1,15 +1,16 @@
+// MEJORADO: Se integra ConsoleReader y el GestorLista para un código más limpio y robusto.
 package utp.poo.proyecto.services;
 
 import utp.poo.proyecto.entities.personas.*;
 import utp.poo.proyecto.entities.productos.*;
+import utp.poo.proyecto.generics.GestorLista; // MEJORADO: Se usa el gestor genérico
 import utp.poo.proyecto.utils.BoletaUtils;
+import utp.poo.proyecto.utils.ConsoleReader; // MEJORADO: Se usa la nueva utilidad
 import utp.poo.proyecto.utils.FileUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
-
 import org.springframework.stereotype.Service;
+import java.util.List;
+
 
 @Service
 public class ComprobanteServiceImp implements ComprobanteService {
@@ -18,150 +19,106 @@ public class ComprobanteServiceImp implements ComprobanteService {
     private final Vendedor vendedorPorDefecto;
 
     public ComprobanteServiceImp() {
-        Random random = new Random();
+        // Esto está bien para una demo. En una app real, vendría de una base de datos.
         vendedorPorDefecto = new Vendedor();
         vendedorPorDefecto.setNombre("Josue");
-        vendedorPorDefecto.setDni(Math.abs(random.nextLong() % 100000000));
-        vendedorPorDefecto.setCorreo("josue" + random.nextInt(1000) + "@cafe.com");
-        vendedorPorDefecto.setTelefono(900000000L + random.nextInt(99999999));
+        vendedorPorDefecto.setDni(71781293L);
+        vendedorPorDefecto.setCorreo("josue.vendedor@cafeagusto.com");
+        vendedorPorDefecto.setTelefono(987654321L);
     }
 
     @Override
     public void generarBoleta(Scanner sc) {
-        System.out.println("=======================================");
+        System.out.println("\n=======================================");
         System.out.println("      ☕ ¡Bienvenido a Café Agusto! ☕");
-        System.out.println("  Disfruta la mejor experiencia de café");
         System.out.println("=======================================\n");
 
-        Vendedor vendedor = vendedorPorDefecto;
-
         Cliente cliente = new Cliente();
-        System.out.print("Ingrese el nombre del cliente: ");
-        String nombreCliente = sc.nextLine().trim();
-        cliente.setNombre(nombreCliente.isEmpty() ? null : nombreCliente);
-
-        System.out.print("Ingrese el DNI del cliente: ");
-        String dniStr = sc.nextLine().trim();
-        if (dniStr.isEmpty()) {
-            cliente.setDni(null);
-        } else {
+        cliente.setNombre(ConsoleReader.leerOpcional(sc, "Ingrese el nombre del cliente (opcional): "));
+        
+        String dniStr = ConsoleReader.leerOpcional(sc, "Ingrese el DNI del cliente (opcional): ");
+        if (!dniStr.isEmpty()) {
             try {
                 cliente.setDni(Long.parseLong(dniStr));
             } catch (NumberFormatException e) {
+                System.out.println("DNI no válido, se dejará en blanco.");
                 cliente.setDni(null);
             }
         }
+        
+        // MEJORADO: Usamos GestorLista para manejar la lista de productos de la venta.
+        GestorLista<Producto> productos = new GestorLista<>();
+        boolean agregarMas;
 
-        List<Producto> productos = new ArrayList<>();
-        boolean agregarMas = true;
-
-        while (agregarMas) {
+        do {
             Producto producto = crearProductoInteractivo(sc);
             if (producto != null) {
-                productos.add(producto);
+                productos.agregar(producto);
             }
-            System.out.print("¿Desea agregar otro producto? (si/no): ");
-            agregarMas = sc.nextLine().trim().equalsIgnoreCase("si");
+            String respuesta = ConsoleReader.leerNoVacio(sc, "¿Desea agregar otro producto? (si/no): ");
+            agregarMas = respuesta.equalsIgnoreCase("si");
+        } while (agregarMas);
+
+        if(productos.obtenerTodos().isEmpty()){
+            System.out.println("No se agregaron productos. Boleta cancelada.");
+            return;
         }
 
-        String boleta = BoletaUtils.imprimirBoleta(vendedor, cliente, productos);
-        FileUtils.guardarTexto(RUTA_BOLETAS, boleta, true);
-
-        System.out.println("\n=== BOLETA GENERADA ===");
-        System.out.println(boleta);
-        System.out.println("========================\n");
+        guardarBoleta(vendedorPorDefecto, cliente, productos.obtenerTodos());
     }
 
     @Override
     public Producto crearProductoInteractivo(Scanner sc) {
-        System.out.println("Seleccione el tipo de producto:");
-        System.out.println("1. Insumo");
-        System.out.println("2. Comida");
-        System.out.println("3. Bebida");
-        System.out.print("Opción: ");
-        int tipo = 0;
-        while (tipo < 1 || tipo > 3) {
-            String tipoStr = sc.nextLine().trim();
-            try {
-                tipo = Integer.parseInt(tipoStr);
-                if (tipo < 1 || tipo > 3) {
-                    System.out.print("Opción inválida. Intente de nuevo: ");
-                }
-            } catch (NumberFormatException e) {
-                System.out.print("Ingrese una opción válida (1-3): ");
-            }
-        }
+        int tipo = ConsoleReader.leerOpcion(sc, "Seleccione tipo de producto (1. Insumo, 2. Comida, 3. Bebida): ", 1, 3);
 
         Producto producto = null;
+        String nombre;
+        Integer cantidad;
+        Double precio;
+
         switch (tipo) {
             case 1:
                 producto = new Insumo();
-                System.out.print("Nombre del insumo: ");
-                String nombreInsumo = sc.nextLine().trim();
-                producto.setNombre(nombreInsumo.isEmpty() ? null : nombreInsumo);
-                System.out.print("Cantidad: ");
-                producto.setCantidad(leerEnteroPositivoNull(sc));
-                System.out.print("Precio unitario: ");
-                producto.setPrecioVenta(leerDoublePositivoNull(sc));
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre del insumo: ");
+                cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
                 break;
             case 2:
                 producto = new Comida();
-                System.out.print("Nombre de la comida: ");
-                String nombreComida = sc.nextLine().trim();
-                producto.setNombre(nombreComida.isEmpty() ? null : nombreComida);
-                System.out.print("¿Es para llevar? (si/no): ");
-                String paraLlevar = sc.nextLine().trim();
-                ((Comida) producto).setParaLlevar(paraLlevar.isEmpty() ? null : paraLlevar.equalsIgnoreCase("si"));
-                System.out.print("Precio unitario: ");
-                producto.setPrecioVenta(leerDoublePositivoNull(sc));
-                System.out.print("Cantidad: ");
-                producto.setCantidad(leerEnteroPositivoNull(sc));
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la comida: ");
+                cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
+                String paraLlevarStr = ConsoleReader.leerOpcional(sc, "¿Es para llevar? (si/no): ");
+                ((Comida) producto).setParaLlevar(paraLlevarStr.equalsIgnoreCase("si"));
                 break;
             case 3:
                 producto = new Bebida();
-                System.out.print("Nombre de la bebida: ");
-                String nombreBebida = sc.nextLine().trim();
-                producto.setNombre(nombreBebida.isEmpty() ? null : nombreBebida);
-                System.out.print("Cantidad: ");
-                producto.setCantidad(leerEnteroPositivoNull(sc));
-                System.out.print("Tamaño (Pequeña/Mediana/Grande): ");
-                String tam = sc.nextLine().trim();
-                ((Bebida) producto).setTamaño(tam.isEmpty() ? null : tam);
-                System.out.print("Precio unitario: ");
-                producto.setPrecioVenta(leerDoublePositivoNull(sc));
+                nombre = ConsoleReader.leerNoVacio(sc, "Nombre de la bebida: ");
+                cantidad = ConsoleReader.leerEnteroPositivoNull(sc, "Cantidad: ");
+                precio = ConsoleReader.leerDoublePositivoNull(sc, "Precio unitario: ");
+                String tam = ConsoleReader.leerOpcional(sc, "Tamaño (Pequeña/Mediana/Grande): ");
+                ((Bebida) producto).setTamaño(tam);
                 break;
+            default:
+                // Este caso no debería ocurrir por la validación de leerOpcion
+                return null;
         }
+        
+        producto.setNombre(nombre);
+        producto.setCantidad(cantidad != null ? cantidad : 1); // Por defecto 1 si no se especifica
+        producto.setPrecioVenta(precio != null ? precio : 0.0); // Por defecto 0.0 si no se especifica
+        
         return producto;
     }
-
-    // Métodos auxiliares para validar entrada de números (aceptan null)
-    private Integer leerEnteroPositivoNull(Scanner sc) {
-        String entrada = sc.nextLine().trim();
-        if (entrada.isEmpty()) return null;
-        try {
-            int valor = Integer.parseInt(entrada);
-            return valor >= 0 ? valor : null;
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-    private Double leerDoublePositivoNull(Scanner sc) {
-        String entrada = sc.nextLine().trim();
-        if (entrada.isEmpty()) return null;
-        try {
-            double valor = Double.parseDouble(entrada);
-            return valor >= 0 ? valor : null;
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
+    
     @Override
     public void guardarBoleta(Vendedor vendedor, Cliente cliente, List<Producto> productos) {
         String boleta = BoletaUtils.imprimirBoleta(vendedor, cliente, productos);
-        FileUtils.guardarTexto(RUTA_BOLETAS, boleta, true);
-        System.out.println("Boleta guardada correctamente.");
+        FileUtils.guardarTexto(RUTA_BOLETAS, boleta, true); // Usar append
+        
+        System.out.println("\n=== BOLETA GENERADA Y GUARDADA ===");
+        System.out.println(boleta);
+        System.out.println("==================================\n");
     }
 
     @Override
@@ -170,11 +127,9 @@ public class ComprobanteServiceImp implements ComprobanteService {
         if (boletas.isEmpty()) {
             System.out.println("No hay boletas registradas.");
         } else {
-            System.out.println("=== BOLETAS REGISTRADAS ===");
-            for (String linea : boletas) {
-                System.out.println(linea);
-            }
-            System.out.println("===========================");
+            System.out.println("\n=== BOLETAS REGISTRADAS ===");
+            boletas.forEach(System.out::println);
+            System.out.println("===========================\n");
         }
     }
 }

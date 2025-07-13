@@ -19,17 +19,11 @@ public class Proveedor {
     private List<Producto> productos;
     private List<Factura> facturas;
 
-    public String getNombre() {
-    return nombre;
-    }
-
     public void asignarProducto(Producto producto) {
-    System.out.println("Proveedor " + this.nombre + " ha sido asignado al producto: " + producto.getNombre());
+        System.out.println("Proveedor " + this.nombre + " ha sido asignado al producto: " + producto.getNombre());
     }
     
     public void metodoPago(){
-        
         System.out.println("Los metodos de pago disponibles son: ");
-        
     }
 }
